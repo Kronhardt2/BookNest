@@ -1,0 +1,202 @@
+/* Reset básico de todos os elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo global do body */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f7f7f7;
+}
+
+/* ===================== HEADER ===================== */
+.site-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid #ddd;
+}
+
+.site-header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  background: #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.site-header .logo a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.site-header .nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.site-header .nav-menu a:hover {
+  opacity: 0.8;
+}
+
+/* ===================== PÁGINA DO PRODUTO ===================== */
+.product-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #f8f9fc;
+}
+
+.product-card {
+  display: flex;
+  flex-wrap: wrap; /* responsivo: capa em cima no mobile */
+  gap: 30px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================== CAPA DO PRODUTO ===================== */
+.cover img {
+  width: 260px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* ===================== META INFORMAÇÕES ===================== */
+.meta {
+  flex: 1;
+  min-width: 280px;
+}
+
+.meta h1 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  color: #222;
+  font-weight: 700;
+}
+
+.meta p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 1rem;
+}
+
+.meta p strong {
+  color: #222;
+}
+
+.meta .desc {
+  margin: 18px 0;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* ===================== LISTA DE LINKS DE COMPRA ===================== */
+.meta h3 {
+  margin: 20px 0 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.meta ul {
+  list-style: none;
+  padding: 0;
+}
+
+.meta ul li {
+  margin: 8px 0;
+}
+
+.meta ul li a {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #f0f4ff;
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.meta ul li a:hover {
+  background: #2575fc;
+  color: #fff;
+}
+
+/* ===================== BOTÃO BIBLIOTECA ===================== */
+.library-form {
+  margin-top: 24px;
+}
+
+.btn-add {
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+/* ===================== AVISO DE LOGIN ===================== */
+.login-warning {
+  margin-top: 20px;
+  color: #b33;
+  font-weight: 500;
+  background: #ffeaea;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
+@media (max-width: 768px) {
+  .product-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cover img {
+    width: 220px;
+    height: 320px;
+  }
+
+  .meta {
+    width: 100%;
+  }
+
+  .meta ul li a {
+    width: 100%;
+    text-align: center;
+  }
+}

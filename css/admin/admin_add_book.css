@@ -1,0 +1,174 @@
+/* ==================== Reset básico ==================== */
+/* Remove margens e paddings padrão e define box-sizing para facilitar o layout */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==================== Body ==================== */
+/* Fonte padrão, cor de fundo e cor do texto do painel administrativo */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f7f7f7;
+  color: #333;
+}
+
+/* ==================== Menu horizontal do topo ==================== */
+/* Barra branca com sombra, título à esquerda e links à direita */
+.admin-header {
+  background: #f4f4f4;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Título do menu à esquerda */
+.admin-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  cursor: default;
+}
+
+/* Links de navegação à direita */
+.admin-header .nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  margin-left: 20px;
+  transition: color 0.3s;
+}
+
+.admin-header .nav-links a:hover {
+  color: #666;
+}
+
+/* ==================== Container do formulário ==================== */
+/* Caixa centralizada com fundo claro, bordas arredondadas e sombra */
+.add-book-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #f4f4f4;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== Título do formulário ==================== */
+/* Título centralizado com borda inferior azul, sombra e espaçamento */
+.title h1 {
+  background: #f7f7f7;
+  margin: 0 0 20px 33%;
+  border-bottom: 3px solid #3b82f6;
+  display: inline-block;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  text-align: center;
+  font-size: 1.8rem;
+  cursor: default;
+}
+
+/* ==================== Layout do formulário ==================== */
+/* Grid de duas colunas com espaçamento entre os inputs */
+.add-book-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px;
+  align-items: start;
+}
+
+/* ==================== Inputs, selects e textarea ==================== */
+/* Campos arredondados, com padding e transição suave para foco */
+.add-book-form input,
+.add-book-form select,
+.add-book-form textarea {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.add-book-form select {
+  cursor: pointer;
+}
+
+/* Efeito de foco azul nos campos */
+.add-book-form input:focus,
+.add-book-form select:focus,
+.add-book-form textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+  outline: none;
+}
+
+/* ==================== Labels ==================== */
+/* Labels em bloco acima dos campos, com peso e cor */
+.add-book-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+/* ==================== Botão do formulário ==================== */
+/* Botão azul arredondado, centralizado e com efeito hover */
+.add-book-form button {
+  grid-column: 2;
+  margin-top: 80px;
+  padding: 12px 30px;
+  border-radius: 50px;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.add-book-form div button {
+  text-align: center;
+  margin: 15px 0 0 120px;
+}
+
+.add-book-form button:hover {
+  background: #8b5cf6;
+  transform: translateY(-2px);
+}
+
+/* ==================== Alerta flutuante ==================== */
+/* Mensagem fixa no topo, centralizada, com animação e sombra */
+.floating-alert {
+  position: fixed;
+  top: 3%;
+  left: 35%;
+  z-index: 9999;
+  min-width: 300px;
+  max-width: 90%;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  animation: slide 0.5s, fade 0.5s 3s forwards;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para alerta de sucesso */
+.floating-alert.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Estilo para alerta de erro */
+.floating-alert.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}

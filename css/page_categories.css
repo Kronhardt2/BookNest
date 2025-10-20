@@ -1,0 +1,306 @@
+/* Reset básico de todos os elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo global do body */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f7f7f7;
+}
+
+/* ===================== HEADER ===================== */
+.site-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6); /* degradê azul→roxo */
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid #ddd;
+}
+
+.site-header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  background: #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* efeito degradê no texto */
+}
+
+.site-header .logo a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.site-header .nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.site-header .nav-menu a:hover {
+  opacity: 0.8;
+}
+
+/* ===================== CATEGORY HEADER ===================== */
+.category-header {
+  padding: 50px 0;
+  background: #fff;
+  text-align: center;
+}
+
+.category-header h1 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #333;
+  position: relative;
+}
+
+.category-header h1::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 3px;
+  margin: 10px auto 0;
+}
+
+/* ===================== BOOK GRID ===================== */
+/* Container principal dos livros */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  justify-content: center;
+  background: #fff;
+}
+
+/* Card individual do livro */
+.book-card {
+  width: 220px;
+  background: #fff5e6;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.book-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* Capa do livro */
+.book-card img {
+  margin-top: 10px;
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  border-bottom: 5px double #3b82f6;
+}
+
+/* Informações do livro */
+.book-card .book-info {
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  cursor: default;
+}
+
+/* Título, autor e preço */
+.book-info h3,
+.book-card .book-info p.author,
+.book-card .book-info p.price {
+  margin: 0;
+}
+
+.book-card .book-info h3 {
+  font-size: 1.15rem;
+  color: #333;
+  margin-bottom: 5px;
+  min-height: 2.7em;
+}
+
+.book-card .book-info p.author {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 10px 0;
+}
+
+.book-card .book-info p.price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #3b82f6;
+  margin: 0 0 5px 0;
+}
+
+/* Categoria em negrito */
+.book-info .category a {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.book-info .category {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+/* Preço e botão de compra */
+.bottom-info {
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.bottom-info .price {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.bottom-info .btn-buy {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease;
+}
+
+.bottom-info .btn-buy:hover {
+  background-color: #0056b3;
+}
+
+/* ===================== PAGE CATEGORY TITLE ===================== */
+.page-category-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 40px 20px 20px 20px;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 8px;
+}
+
+/* ===================== FOOTER ===================== */
+footer.support {
+  background: #f0f4f8;
+  padding: 40px 20px;
+  font-size: 0.95rem;
+}
+
+/* Container interno do rodapé */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Colunas do rodapé */
+.footer-links,
+.footer-map,
+.footer-social {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Links à esquerda */
+.footer-links {
+  padding-left: 20px;
+}
+
+.footer-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.footer-links p.clickable {
+  cursor: pointer;
+  margin: 5px 0;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.footer-links p.clickable:hover {
+  color: #007bff;
+}
+
+/* Coluna central do mapa */
+.footer-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-placeholder {
+  width: 100%;
+  max-width: 200px;
+  height: 80px;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.map-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Coluna de redes sociais */
+.footer-social {
+  text-align: right;
+}
+
+.footer-social .center-text {
+  margin-bottom: 10px;
+  margin-right: 11%;
+}
+
+.footer-social .social-icons {
+  display: flex;
+  justify-content: right;
+  gap: 15px;
+}
+
+.footer-social .social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.footer-social .social-icon:hover {
+  background: #007bff;
+  color: #fff;
+  transform: translateY(-3px);
+}

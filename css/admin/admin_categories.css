@@ -1,0 +1,207 @@
+/* ==================== Reset básico ==================== */
+/* Remove margens e paddings padrão, e define box-sizing para facilitar layouts */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==================== Body ==================== */
+/* Fonte padrão, cor de fundo e texto do painel administrativo */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f7f7f7;
+  color: #333;
+}
+
+/* ==================== Formulário de adição de categorias ==================== */
+/* Caixa branca com sombra, bordas arredondadas e margem lateral */
+.form-add-categories {
+  background-color: #fff;
+  width: 45.5%;
+  margin: 20px 0 0 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Adicionei padding interno para melhor espaçamento */
+}
+
+/* ==================== Título do formulário ==================== */
+/* Título azul com borda inferior, sombra e alinhamento central */
+.add-categories {
+  margin: 0 0 15px 0;
+  border-bottom: 3px solid #3b82f6;
+  display: inline-block;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 45%;
+  text-align: center;
+  padding-bottom: 3px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* ==================== Título das categorias existentes ==================== */
+.categories {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* ==================== Cabeçalho do painel ==================== */
+/* Barra horizontal com título à esquerda e links à direita */
+.admin-header {
+  background: #fff;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Título à esquerda */
+.admin-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Links de navegação à direita */
+.admin-header .nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  margin-left: 20px;
+  transition: color 0.3s;
+}
+
+/* Hover nos links do menu */
+.admin-header .nav-links a:hover {
+  color: #3b82f6;
+}
+
+/* ==================== Conteúdo principal ==================== */
+/* Espaço para o conteúdo do admin deslocado abaixo do menu */
+.admin-content {
+  padding: 20px;
+  margin-top: 10px;
+}
+
+/* ==================== Formulários ==================== */
+form {
+  margin: 20px 0 0 20px;
+}
+
+/* Inputs, selects e textarea com borda arredondada e transição suave */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.6rem 1rem;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+/* Foco nos inputs com destaque azul */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+/* ==================== Botões ==================== */
+button,
+a.btn {
+  padding: 0.6rem 1.5rem;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+/* Efeito hover nos botões */
+button:hover,
+a.btn:hover {
+  background: #8b5cf6;
+  transform: translateY(-2px);
+}
+
+/* ==================== Tabelas ==================== */
+table {
+  width: 97%;
+  border-collapse: collapse;
+  margin: 20px 0 20px 20px;
+  font-size: 0.95rem;
+}
+
+/* Células da tabela */
+table th,
+table td {
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Links dentro da tabela */
+td a {
+  text-decoration: none;
+  color: #3b82f6;
+  transition: color 0.3s;
+}
+
+td a:hover {
+  color: #8b5cf6;
+}
+
+/* Colunas com centralização (ex: ações) */
+.edit-exclude {
+  text-align: center;
+}
+
+/* Hover na linha da tabela */
+table tr:hover {
+  background: #f0f4ff;
+}
+
+/* ==================== Alerta flutuante ==================== */
+.floating-alert {
+  position: fixed;
+  top: 3%;
+  left: 35%;
+  z-index: 9999;
+  min-width: 300px;
+  max-width: 90%;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  animation: slide 0.5s, fade 0.5s 3s forwards;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para alerta de sucesso */
+.floating-alert.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Estilo para alerta de erro */
+.floating-alert.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}

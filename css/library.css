@@ -1,0 +1,327 @@
+/* ===================== RESET & BASE ===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f7f7f7;
+}
+
+/* ===================== HEADER ===================== */
+.site-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: linear-gradient(
+    90deg,
+    #3b82f6,
+    #8b5cf6
+  ); /* degradê azul → roxo */
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid #ddd;
+}
+
+.site-header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  background: #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* texto com degradê */
+}
+
+.site-header .logo a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.site-header .nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.site-header .nav-menu a:hover {
+  opacity: 0.8;
+}
+
+/* ===================== SEÇÃO BEM-VINDO ===================== */
+.welcome {
+  text-align: center;
+  padding: 70px 20px;
+  background: linear-gradient(180deg, #fff, #f0f4ff);
+  color: #333;
+  border-radius: 0 0 40px 40px;
+}
+
+.welcome h1 {
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===================== BIBLIOTECA ===================== */
+.library-container {
+  max-width: 1000px;
+  margin: 40px auto 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 0 15px;
+}
+
+/* ---------- Card individual ---------- */
+.library-card {
+  background: #fff5e6;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.library-card img {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  border-bottom: 4px double #3b82f6;
+  margin-bottom: 10px;
+}
+
+.library-card .info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* máximo de 2 linhas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.6em; /* garante altura igual */
+}
+
+.library-card .info p {
+  margin: 4px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* ---------- Input (página atual) ---------- */
+.library-card input[type="number"] {
+  width: 80px;
+  height: 30px;
+  padding: 8px 12px;
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.library-card input[type="text"] {
+  padding: 8px 12px;
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.library-card input[type="number"],
+input[type="text"]:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+}
+
+/* Remove setas do input */
+.library-card input[type="number"]::-webkit-inner-spin-button,
+.library-card input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.library-card input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* ---------- Barra de progresso ---------- */
+.progress-bar {
+  background: #e0e0e0;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 10px;
+  margin: 5px auto 8px;
+  width: 90%;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  transition: width 0.3s;
+  border-radius: 20px;
+}
+
+/* ---------- Botões ---------- */
+.library-card button {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 12px;
+  background: #3b82f6;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 6px;
+  height: 30px;
+}
+
+.library-card button:hover {
+  background: #8b5cf6;
+}
+
+/* ===================== FOOTER ===================== */
+footer.support {
+  background: #f0f4f8;
+  padding: 40px 20px;
+  font-size: 0.95rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- Colunas ---------- */
+.footer-links,
+.footer-map,
+.footer-social {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-links {
+  padding-left: 20px;
+}
+
+.footer-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.footer-links p.clickable {
+  cursor: pointer;
+  margin: 5px 0;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.footer-links p.clickable:hover {
+  color: #007bff;
+}
+
+/* ---------- Coluna central (mapa) ---------- */
+.footer-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-placeholder {
+  width: 100%;
+  max-width: 200px;
+  height: 80px;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.map-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* ---------- Redes sociais ---------- */
+.footer-social {
+  text-align: right;
+}
+
+.footer-social .center-text {
+  margin-bottom: 10px;
+  margin-right: 11%;
+}
+
+.footer-social .social-icons {
+  display: flex;
+  justify-content: right;
+  gap: 15px;
+}
+
+.footer-social .social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.footer-social .social-icon:hover {
+  background: #007bff;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* Até 768px */
+@media (max-width: 768px) {
+  .footer-social {
+    justify-items: end;
+    margin-right: 9%;
+  }
+
+  .social-icons {
+    margin-right: 2%;
+  }
+}
+
+/* 1 capa até 480px */
+@media (max-width: 480px) {
+  .footer-social {
+    justify-items: baseline;
+    margin-left: 6%;
+    margin-top: 6%;
+  }
+
+  .footer-map {
+    align-items: baseline;
+    margin-left: 6%;
+    margin-top: 6%;
+  }
+}

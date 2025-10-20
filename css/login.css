@@ -1,0 +1,719 @@
+/* Importa a fonte "Open Sans" do Google Fonts com pesos 300, 400 e 700 */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap");
+
+/* Reset básico: remove margens/paddings padrões e aplica box-sizing global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Define a fonte principal para o corpo da página */
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+/* Container principal: centraliza conteúdo na tela */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ecf0f1;
+}
+
+/* Área branca do conteúdo com cantos arredondados */
+.content {
+  background-color: #fff;
+  border-radius: 15px;
+  width: 960px;
+  height: 55%;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* Faixa colorida aplicada antes do conteúdo (lado esquerdo) */
+.content::before {
+  content: "";
+  position: absolute;
+  background: linear-gradient(145deg, #3b82f6, #8b5cf6);
+  width: 40%;
+  height: 100%;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  left: 0;
+}
+
+/* Títulos principais */
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+/* Variações de cor do título */
+.title-primary {
+  color: #fff;
+  cursor: default;
+}
+.title-second {
+  color: #3b82f6;
+  cursor: default;
+}
+
+/* Textos descritivos */
+.description {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  cursor: default;
+}
+.description-primary {
+  color: #fff;
+}
+.description-second {
+  color: #7f8c8d;
+  text-align: center;
+}
+
+/* Botões básicos */
+.btn {
+  border-radius: 15px;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 10px;
+  padding: 10px 50px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 150px;
+  align-self: center;
+  border: none;
+  margin-top: 1rem;
+}
+
+/* Botão transparente com borda branca */
+.btn-primary {
+  background-color: transparent;
+  border: 1px solid #fff;
+  transition: background-color 0.5s;
+}
+.btn-primary:hover {
+  background-color: #fff;
+  color: #3b82f6;
+}
+
+/* Botão azul com sombra */
+.btn-second {
+  background-color: #3b82f6;
+  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.btn-second:hover {
+  background-color: #8b5cf6;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* Estrutura da primeira tela (login/cadastro) */
+.first-content {
+  display: flex;
+}
+.first-content .second-column {
+  z-index: 11;
+}
+.first-column {
+  text-align: center;
+  width: 40%;
+  z-index: 10;
+}
+.second-column {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Área de redes sociais */
+.social-media {
+  margin: 1rem 0;
+  justify-items: center;
+}
+.link-social-media:not(:first-child) {
+  margin-left: 10px;
+}
+.link-social-media .item-social-media {
+  transition: background-color 0.5s;
+}
+.link-social-media:hover .item-social-media {
+  background-color: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+}
+.list-social-media {
+  display: flex;
+  list-style-type: none;
+}
+.item-social-media {
+  border: 1px solid #bdc3c7;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  color: #95a5a6;
+}
+
+/* Formulários */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+}
+.form input {
+  height: 45px;
+  width: 100%;
+  border: none;
+}
+
+/* Corrige autofill do Chrome */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #ecf0f1 inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+/* Campos de input */
+.label-input {
+  background-color: #ecf0f1;
+  display: flex;
+  align-items: center;
+  margin: 8px;
+}
+.input {
+  background-color: #ecf0f1;
+}
+.icon-modify {
+  color: #7f8c8d;
+  padding: 0 5px;
+}
+
+/* Estrutura da segunda tela */
+.second-content {
+  position: absolute;
+  display: flex;
+}
+.second-content .first-column {
+  order: 2;
+  z-index: -1;
+}
+.second-content .second-column {
+  order: 1;
+  z-index: -1;
+}
+
+/* Link de recuperação de senha */
+.password {
+  color: #3b82f6;
+  font-size: 14px;
+  margin: 15px 0;
+  text-align: center;
+  text-decoration: none;
+}
+.password:hover {
+  color: #8b5cf6;
+}
+
+/* Container auxiliar para inputs com barra de força de senha */
+.containera {
+  position: relative;
+  flex-direction: column;
+  gap: 10px;
+}
+.containera h2 {
+  color: #666;
+  font-weight: 500;
+}
+.containera .inputArea {
+  position: relative;
+  width: 100%;
+}
+.containera .inputArea input {
+  position: relative;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 10px;
+  color: aliceblue;
+  font-size: 1.1em;
+}
+
+/* Barra que indica a força da senha */
+.containera .strengthMeter {
+  position: absolute;
+  bottom: 4.1px;
+  width: 95.01%;
+  height: 3.1px;
+}
+.containera .strengthMeter::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  transition: 0.5s;
+}
+/* Níveis da barra */
+.containera.weak .strengthMeter::before {
+  width: 10%;
+  background: rgb(220, 22, 22);
+}
+.containera.moderate .strengthMeter::before {
+  width: 70%;
+  background: #f0da13;
+}
+.containera.strong .strengthMeter::before {
+  width: 100%;
+  background: #1da710;
+}
+
+/* Texto dentro da barra de força */
+.containera .strengthMeter::after {
+  position: absolute;
+  transition: 0.5s;
+  color: aliceblue;
+}
+
+/* Botão para mostrar/ocultar senha */
+.show {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.show.hide::before {
+  content: "Hide";
+}
+.show::before {
+  content: "Show";
+  font-size: 12px;
+  color: black;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Ajustes de formulários extras */
+.recover-password {
+  text-align: center;
+}
+.btn-link {
+  width: 270px;
+  height: 40px;
+}
+.btn-login {
+  width: 180px;
+  height: 40px;
+  display: flex;
+  margin-left: 22%;
+}
+.formlogin {
+  width: 100%;
+  text-align: center;
+  justify-items: center;
+}
+.title {
+  text-align: center;
+  justify-items: center;
+  margin-bottom: 20px;
+}
+.social-form {
+  text-align: center;
+  justify-items: center;
+}
+.meta {
+  justify-items: center;
+  margin: 20px 0 10px 0;
+}
+.meta ul {
+  list-style: none;
+}
+.meta ul li a {
+  display: flex;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #f0f4ff;
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+  align-items: center;
+}
+.meta ul li a:hover {
+  background: #2575fc;
+  color: #fff;
+}
+
+/* Transições entre telas de login/cadastro */
+.sign-in-js .first-content .first-column {
+  z-index: -1;
+}
+.sign-in-js .second-content .second-column {
+  z-index: 11;
+}
+.sign-in-js .second-content .first-column {
+  z-index: 13;
+}
+/* Slide para direita */
+.sign-in-js .content::before {
+  left: 60%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  animation: slidein 1.3s;
+  z-index: 12;
+}
+/* Slide para esquerda */
+.sign-up-js .content::before {
+  animation: slideout 1.3s;
+  z-index: 12;
+}
+.sign-up-js .second-content .first-column,
+.sign-up-js .second-content .second-column {
+  z-index: -1;
+}
+.sign-in-js .second-content .second-column,
+.sign-up-js .first-content .second-column {
+  animation: opacidadeClAt 3s;
+  /*animation: opacidadeClAtMob 3s;*/
+  z-index: 11;
+}
+.sign-in-js .second-content .first-column,
+.sign-up-js .first-content .first-column {
+  z-index: 13;
+  animation: opacidadeClFt 1.3s;
+  /*animation: opacidadeClFtMob 1.3s;*/
+}
+/* Movimentação atrás do content::before */
+.sign-in-js .first-content .second-column {
+  z-index: -1;
+  position: relative;
+  animation: deslocamentoEsq 1.3s;
+  /*animation: deslocamentoBot 1s;*/
+}
+.sign-up-js .second-content .second-column {
+  position: relative;
+  z-index: -1;
+  animation: deslocamentoDir 1.3s;
+  /*animation: deslocamentoTop 0.6s;*/
+}
+
+/* Alertas flutuantes */
+.floating-alert {
+  position: fixed;
+  top: 3%;
+  left: 35%;
+  z-index: 9999;
+  min-width: 300px;
+  max-width: 90%;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  animation: slide 0.5s, fade 0.5s 3s forwards;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.floating-alert.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.floating-alert.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+
+/* Animação de entrada do alerta */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Animação de opacidade (conteúdo aparecendo) */
+@keyframes opacidadeClAt {
+  from {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+/* Animação de opacidade (conteúdo sumindo) */
+@keyframes opacidadeClFt {
+  from {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+}
+
+/* Animação de deslocamento para esquerda */
+@keyframes deslocamentoEsq {
+  from {
+    left: 0;
+    opacity: 1;
+    z-index: 12;
+  }
+  10% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+  to {
+    left: -110px;
+    opacity: 0;
+    z-index: -1;
+  }
+}
+
+/* Animação de deslocamento para direita */
+@keyframes deslocamentoDir {
+  from {
+    left: 0;
+    z-index: 12;
+  }
+  10% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+  to {
+    left: 110px;
+    opacity: 0;
+    z-index: -1;
+  }
+}
+
+/* Slide entrando */
+@keyframes slidein {
+  from {
+    left: 0;
+    width: 40%;
+  }
+  to {
+    left: 60%;
+    width: 40%;
+  }
+}
+
+/* Slide saindo */
+@keyframes slideout {
+  from {
+    left: 60%;
+    width: 40%;
+  }
+  to {
+    left: 0;
+    width: 40%;
+  }
+}
+
+/* Alerta subindo */
+@keyframes slide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateY(-30%);
+  }
+}
+
+/* Alerta sumindo */
+@keyframes fade {
+  to {
+    opacity: 0;
+    transform: translateY(-30%);
+  }
+}
+
+/*VERSÃO MOBILE*/
+@media screen and (max-width: 1040px) {
+  .content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .content::before {
+    width: 100%;
+    height: 40%;
+    top: 0;
+    border-radius: 0;
+  }
+
+  .first-content,
+  .second-content {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .first-column,
+  .second-column {
+    width: 100%;
+  }
+
+  .sign-in-js .content::before {
+    top: 60%;
+    left: 0;
+    border-radius: 0;
+  }
+
+  .form {
+    width: 90%;
+  }
+
+  .sign-in-js .second-content .second-column,
+  .sign-up-js .first-content .second-column {
+    animation: opacidadeClAtMob 3s;
+    z-index: 11;
+  }
+
+  .sign-in-js .second-content .first-column,
+  .sign-up-js .first-content .first-column {
+    z-index: 13;
+    animation: opacidadeClFtMob 1.3s;
+  }
+
+  /* Movimentação atrás do content::before */
+  .sign-in-js .first-content .second-column {
+    z-index: -1;
+    position: relative;
+    animation: deslocamentoBot 1s;
+  }
+  
+  .sign-up-js .second-content .second-column {
+    position: relative;
+    z-index: -1;
+    animation: deslocamentoTop 0.6s;
+  }
+
+  /* ANIMAÇÃO MOBILE CSS*/
+
+  /* Animação Bottom */
+  @keyframes deslocamentoBot {
+    from {
+      top: 0;
+      opacity: 1;
+      z-index: 12;
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+
+    to {
+      top: -110px;
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+
+  /* Animação Top */
+  @keyframes deslocamentoTop {
+    from {
+      top: 0;
+      z-index: 12;
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+
+    to {
+      top: 110px;
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+
+  /* Animação de opacidade (conteúdo aparecendo) */
+  @keyframes opacidadeClAtMob {
+    from {
+      opacity: 0;
+    }
+
+    5% {
+      opacity: 0;
+    }
+
+    60% {
+      opacity: 1;
+    }
+  }
+
+  /* Animação de opacidade (conteúdo sumindo) */
+  @keyframes opacidadeClFtMob {
+    from {
+      opacity: 0;
+    }
+
+    60% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slidein {
+    from {
+      top: 0;
+      height: 40%;
+    }
+
+    to {
+      top: 60%;
+      height: 40%;
+    }
+  }
+
+  @keyframes slideout {
+    from {
+      top: 60%;
+      height: 40%;
+    }
+
+    to {
+      top: 0;
+      height: 40%;
+    }
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .form {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .form {
+    width: 100%;
+  }
+}

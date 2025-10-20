@@ -1,0 +1,113 @@
+/* Reset básico de todos os elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo global do body */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #111;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ===================== HEADER ===================== */
+.site-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.site-header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.site-header .logo a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.site-header .nav-menu a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.site-header .nav-menu a:hover {
+  opacity: 0.8;
+}
+
+/* ===================== SOBRE NÓS (SEÇÕES) ===================== */
+.sobre-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Cada seção ocupa a tela inteira */
+.sobre-section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 40px;
+  position: sticky;
+  top: 0;
+  /* Estado inicial: invisível e círculo fechado */
+  clip-path: circle(0% at 50% 50%);
+  opacity: 0;
+  transition: clip-path 1s ease, opacity 0.8s ease;
+}
+
+/* Quando ativada, abre o círculo */
+.sobre-section.active {
+  clip-path: circle(150% at 50% 50%);
+  opacity: 1;
+}
+
+/* Quando sai, fecha o círculo novamente */
+.sobre-section.exit {
+  clip-path: circle(0% at 50% 50%);
+  opacity: 0;
+}
+
+/* ===================== CORES DIFERENTES DAS SEÇÕES ===================== */
+.sobre-section:nth-child(1) {
+  background: linear-gradient(135deg, #3a0ca3, #7209b7, #f72585);
+}
+
+.sobre-section:nth-child(2) {
+  background: linear-gradient(135deg, #4361ee, #4895ef, #4cc9f0);
+}
+
+.sobre-section:nth-child(3) {
+  background: linear-gradient(135deg, #06d6a0, #118ab2, #073b4c);
+}
+
+.sobre-section:nth-child(4) {
+  background: linear-gradient(135deg, #f77f00, #fcbf49, #eae2b7);
+}
+
+/* ===================== TEXTOS ===================== */
+.sobre-section h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.sobre-section p {
+  max-width: 800px;
+  line-height: 1.6;
+}
