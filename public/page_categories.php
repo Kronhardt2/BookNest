@@ -105,7 +105,7 @@ function getCoverUrl($cover_name)
     <header class="site-header">
 
         <!-- Logo do site -->
-        <div class="logo"><a href="index.php"> BookNest </a></div>
+        <div class="logo"><a href="site.php"> BookNest </a></div>
 
         <!-- Menu de navegação -->
         <nav class="nav-menu">
@@ -118,7 +118,7 @@ function getCoverUrl($cover_name)
                 <a href="logout.php"> Logout </a>
             <?php else: ?>
                 <!-- Caso contrário, mostra link de login -->
-                <a href="login.php"> Login </a>
+                <a href="index.php"> Login </a>
             <?php endif; ?>
 
         </nav>

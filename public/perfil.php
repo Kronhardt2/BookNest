@@ -74,7 +74,7 @@ $activities = getLastActivities($pdo, $user_id, 5);
     <!-- ======================= CABEÇALHO ======================= -->
     <header class="site-header">
 
-        <div class="logo"><a href="index.php"> BookNest </a></div>
+        <div class="logo"><a href="site.php"> BookNest </a></div>
 
         <nav class="nav-menu">
 
@@ -85,7 +85,7 @@ $activities = getLastActivities($pdo, $user_id, 5);
                 <a href="logout.php">Logout</a>
             <?php else: ?>
                 <!-- Caso contrário, link de login -->
-                <a href="login.php">Login</a>
+                <a href="index.php">Login</a>
             <?php endif; ?>
 
         </nav>

@@ -94,14 +94,14 @@ $amazonLink = $stmtAmazon->fetchColumn();
     <!-- ===================== HEADER ===================== -->
     <header class="site-header">
 
-        <div class="logo"><a href="index.php"> BookNest </a></div>
+        <div class="logo"><a href="site.php"> BookNest </a></div>
 
         <nav class="nav-menu">
             <?php if ($user_id): ?>
                 <a href="perfil.php"> Minha Conta </a>
                 <a href="logout.php"> Logout </a>
             <?php else: ?>
-                <a href="login.php"> Login </a>
+                <a href="index.php"> Login </a>
             <?php endif; ?>
         </nav>
 
@@ -163,7 +163,8 @@ $amazonLink = $stmtAmazon->fetchColumn();
                     </form>
 
                 <?php else: ?>
-                    <p class="login-warning">🔒 Faça <a href="login.php"> login</a> para adicionar este livro à sua
+                    <p class="login-warning">🔒 Faça <a href="index.php
+"> login</a> para adicionar este livro à sua
                         biblioteca. </p>
                 <?php endif; ?>
 

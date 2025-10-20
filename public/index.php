@@ -1,296 +1,376 @@
 <?php
 
-// Inclui configuração, conexão com banco e funções auxiliares
-require_once __DIR__ . '/../src/config.php';
+// Conexão e configuração inicial
+require_once __DIR__ . '/../src/config.php'; // inicia sessão e conecta ao banco
 
-// Verifica se usuário está logado
-require_login();
+// Mensagens de erro ou sucesso
+$erro = $_SESSION['erro_login'] ?? '';
+$erroCadastro = $_SESSION['erro_cadastro'] ?? '';
+$sucesso = $_SESSION['sucesso'] ?? '';
 
-// Recupera informações do usuário da sessão
-$user_name = $_SESSION['name'] ?? 'Visitante';
-$user_id   = $_SESSION['id'] ?? null;
+// Limpa mensagens antigas da sessão
+unset($_SESSION['erro_login'], $_SESSION['erro_cadastro'], $_SESSION['sucesso']);
 
-// ===================== CONSULTAS AO BANCO =====================
+// ===================== LOGIN =====================
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-// Últimos livros adicionados (para o carrossel)
-$new_books = $pdo->query("
-    SELECT id, title, author, avg_price, cover_image
-    FROM books
-    ORDER BY created_at DESC
-    LIMIT 10
-")->fetchAll(PDO::FETCH_ASSOC);
+    // Captura entrada do usuário
+    $email = trim($_POST["email"] ?? '');
+    $password = $_POST["password"] ?? '';
 
-// Livros mais populares (com nome da categoria)
-$popular_books = $pdo->query("
-    SELECT b.id, b.title, b.author, b.avg_price, b.cover_image, c.name AS category_name
-    FROM books b
-    LEFT JOIN categories c ON b.category_id = c.id
-    WHERE b.views > 0
-    ORDER BY b.views DESC
-    LIMIT 10
-")->fetchAll(PDO::FETCH_ASSOC);
-
-// Categorias mais populares (total de views)
-$stmt = $pdo->query("
-    SELECT c.id, c.name, SUM(b.views) AS total_views
-    FROM categories c
-    LEFT JOIN books b ON b.category_id = c.id
-    GROUP BY c.id, c.name
-    ORDER BY total_views DESC
-    LIMIT 6
-");
-$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Banners do carrossel (usando os últimos livros)
-$banners = $new_books;
-
-// ===================== FUNÇÃO AUXILIAR =====================
-
-// Retorna URL da capa do livro (local ou OpenLibrary)
-function getCoverUrl($cover_name)
-{
-    if (!$cover_name)
-        return '../public/covers/default.jpg';
-
-    $local_path = "../public/covers/$cover_name";
-    if (file_exists($local_path)) {
-        return $local_path;
+    // Validação básica
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !$password) {
+        $_SESSION['erro_login'] = "Dados inválidos!";
+        header("Location: index.php");
+        exit;
     }
 
-    $key = pathinfo($cover_name, PATHINFO_FILENAME);
-    return "https://covers.openlibrary.org/b/olid/{$key}-M.jpg";
+    // Consulta segura ao banco de dados para verificar usuário
+    $stmt = $pdo->prepare("SELECT id, name, password, role, status FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        // Verifica senha usando hash seguro
+        if (password_verify($password, $user['password'])) {
+            session_regenerate_id(true);
+
+            // Usuário bloqueado
+            if ($user['status'] == 0) {
+                $_SESSION['erro_login'] = "Usuário bloqueado!";
+                header("Location: index.php");
+                exit;
+            }
+
+            // Armazena dados do usuário na sessão
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $user["id"];
+            $_SESSION["name"] = $user["name"];
+            $_SESSION["role"] = $user["role"];
+
+            // Redirecionamento por tipo de usuário
+            if ($user['role'] === 'admin') {
+                header("Location: ../admin/admin.php");
+            } else {
+                header("Location: site.php");
+            }
+            exit;
+        } else {
+            $_SESSION['erro_login'] = "Senha incorreta!";
+        }
+    } else {
+        $_SESSION['erro_login'] = "Email não encontrado!";
+    }
+
+    header("Location: index.php");
+    exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login </title>
 
-    <title> BookNest - Página Principal </title>
-
-    <!-- CSS principal -->
-    <link rel="stylesheet" href="../css/main.css">
-
-    <!-- Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="icon" href="favicon/favicon.png" type="image/png">
 </head>
 
 <body>
 
-    <!-- ===================== HEADER ===================== -->
-    <header class="site-header">
-
-        <div class="logo"><a href="index.php"> BookNest </a></div>
-
-        <!-- Busca rápida -->
-        <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="search-input" placeholder="Buscar livros...">
+    <!-- ===================== ALERTAS ===================== -->
+    <?php if (!empty($erro)): ?>
+        <div class="floating-alert error">
+            <?= htmlspecialchars($erro, ENT_QUOTES, 'UTF-8') ?>
         </div>
+    <?php endif; ?>
 
-        <!-- Menu de navegação -->
-        <nav class="nav-menu">
+    <?php if (!empty($erroCadastro)): ?>
+        <div class="floating-alert error">
+            <?= htmlspecialchars($erroCadastro, ENT_QUOTES, 'UTF-8') ?>
+        </div>
+    <?php endif; ?>
 
-            <a href="sobre_nos.php"> Sobre Nós </a>
-            <?php if ($user_id): ?>
-                <a href="logout.php"> Logout </a>
-            <?php else: ?>
-                <a href="login.php"> Login </a>
-            <?php endif; ?>
+    <?php if (!empty($sucesso)): ?>
+        <div class="floating-alert success">
+            <?= htmlspecialchars($sucesso, ENT_QUOTES, 'UTF-8') ?>
+        </div>
+    <?php endif; ?>
 
-        </nav>
-    </header>
+    <?php if (isset($_GET['reset']) && $_GET['reset'] === 'success'): ?>
+        <div class="floating-alert success">Senha redefinida com sucesso! Faça login.</div>
+    <?php elseif (isset($_GET['reset']) && $_GET['reset'] === 'error'): ?>
+        <div class="floating-alert error"><?= htmlspecialchars($_GET['msg'] ?? 'Erro ao redefinir a senha') ?></div>
+    <?php endif; ?>
 
-    <main>
-        
-        <!-- ===================== SEÇÃO DE BOAS-VINDAS ===================== -->
-        <section id="welcome-section" class="welcome">
+    <!-- ===================== CONTAINER PRINCIPAL ===================== -->
+    <div class="container">
 
-            <h1> Olá, <?= htmlspecialchars($user_name) ?>! </h1>
+        <!-- Conteúdo 1: Criar conta -->
+        <div class="content first-content">
+            <div class="first-column">
 
-            <div class="buttons">
-                <a href="perfil.php" class="btn"> Minha Conta </a>
-                <a href="library.php" class="btn"> Biblioteca </a>
-            </div>
+                <h2 class="title title-primary"> Bem-vindo de volta! </h2>
 
-        </section>
-
-        <!-- ===================== RESULTADOS DA BUSCA ===================== -->
-        <section id="search-results" class="search-results" style="display:none;">
-            <h2> Resultados da busca </h2>
-            <div id="books-container" class="book-grid"></div>
-        </section>
-
-        <!-- ===================== CARROSSEL DE NOVIDADES ===================== -->
-        <section class="carousel">
-            <h2 class="carousel-title"><i class="fas fa-book"></i> Novidades </h2>
-            <div class="carousel-track">
-
-                <?php foreach ($banners as $banner): ?>
-                    <a href="product.php?id=<?= $banner['id'] ?>">
-                        <img src="<?= getCoverUrl($banner['cover_image']) ?>"
-                            alt="<?= htmlspecialchars($banner['title']) ?>">
-                    </a>
-                <?php endforeach; ?>
+                <p class="description description-primary"> Para continuar conectado conosco </p>
+                <p class="description description-primary"> faça login com suas informações pessoais </p>
+                <button id="signin" class="btn btn-primary"> Entrar </button>
 
             </div>
-            <div class="carousel-dots"></div>
 
-            <button class="prev">‹</button>
-            <button class="next">›</button>
+            <div class="second-column">
 
-        </section>
+                <h2 class="title title-second"> Criar conta </h2>
 
-        <!-- ===================== LIVROS MAIS POPULARES ===================== -->
-        <section class="popular-books">
+                <div class="social-media">
+                    <ul class="list-social-media">
 
-            <h2> Mais Populares </h2>
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media"><i class="fab fa-facebook-f"></i></li>
+                        </a>
 
-            <div class="book-grid">
-                
-                <?php foreach ($popular_books as $book): ?>
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media"><i class="fab fa-google"></i></li>
+                        </a>
 
-                    <div class="book-card">
-                        <img src="<?= getCoverUrl($book['cover_image']) ?>" alt="<?= htmlspecialchars($book['title']) ?>">
-                        
-                        <div class="book-info">
+                    </ul>
+                </div>
 
-                            <h3><?= htmlspecialchars($book['title']) ?></h3>
-                            <p class="author"><?= htmlspecialchars($book['author']) ?></p>
-                            <p class="category">
-                                <a> Categoria: </a> <?= htmlspecialchars($book['category_name'] ?? 'Sem categoria') ?>
-                            </p>
+                <p class="description description-second"> ou use seu e-mail para se cadastrar: </p>
 
-                            <div class="bottom-info">
-                                <p class="price"> R$ <?= number_format($book['avg_price'], 2, ',', '.') ?></p>
-                                <a href="product.php?id=<?= $book['id'] ?>" class="btn-buy"> Ver mais </a>
-                            </div>
+                <form class="form" method="post" action="../src/register.php">
 
-                        </div>
+                    <label class="label-input"><i class="far fa-user icon-modify"></i>
+                        <input class="input" type="text" placeholder="Nome" name="name" required="">
+                    </label>
+
+                    <label class="label-input"><i class="far fa-envelope icon-modify"></i>
+                        <input class="input" type="email" placeholder="E-mail" name="email" required="">
+                    </label>
+
+                    <div class="containera weak">
+
+                        <label class="label-input" for="password">
+                            <i class="fas fa-lock icon-modify"> </i>
+                            <input class="input" type="password" placeholder="Senha" name="password" id="YourPassword" required="">
+                            <div class="show"></div>
+                            <div class="strengthMeter"></div>
+                        </label>
 
                     </div>
 
-                <?php endforeach; ?>
-
+                    <input class="btn btn-second" type="submit" value="criar">
+                </form>
             </div>
-
-        </section>
-
-        <!-- ===================== CATEGORIAS ===================== -->
-        <section class="categories">
-
-            <h2> Categorias </h2>
-
-            <div class="category-grid">
-                <?php foreach ($categories as $cat): ?>
-                    <a href="page_categories.php?category_id=<?= $cat['id'] ?>" class="category-card">
-                        <?= htmlspecialchars($cat['name']) ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-
-        </section>
-    </main>
-
-    <!-- ===================== FOOTER ===================== -->
-    <footer class="support">
-        <div class="footer-container">
-
-            <div class="footer-links">
-                <p class="footer-title"> Links </p>
-                <p class="clickable"> Suporte </p>
-                <p class="clickable"> Dúvidas </p>
-                <p class="clickable"> Contato </p>
-                <p class="clickable"> Política de Privacidade </p>
-            </div>
-
-            <div class="footer-map">
-
-                <p class="map-title"> Localização </p>
-
-                <div class="map-placeholder">
-                    <p> Mapa aqui </p>
-                </div>
-
-            </div>
-
-            <div class="footer-social">
-
-                <p class="footer-title center-text"> Siga-nos </p>
-
-                <div class="social-icons">
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
-                </div>
-
-            </div>
-
         </div>
-    </footer>
 
-    <!-- ===================== SCRIPT DE BUSCA ===================== -->
+        <!-- Conteúdo 2: Login e Recuperação -->
+        <div class="content second-content">
+            <div class="first-column">
+
+                <h2 class="title title-primary"> Olá, vamos começar? </h2>
+
+                <p class="description description-primary"> Crie sua conta agora </p>
+                <p class="description description-primary"> e venha se junte a nós </p>
+
+                <button id="signup" class="btn btn-primary"> Criar </button>
+
+            </div>
+
+            <div class="second-column">
+
+                <!-- ===================== LOGIN FORM ===================== -->
+                <div class="formlogin" id="FormLogin">
+
+                    <h2 class="title title-second"> Faça Login </h2>
+
+                    <div class="social-media">
+                        <ul class="list-social-media">
+
+                            <a class="link-social-media" href="#">
+                                <li class="item-social-media"><i class="fab fa-facebook-f"></i></li>
+                            </a>
+
+                            <a class="link-social-media" href="#">
+                                <li class="item-social-media"><i class="fab fa-google"></i></li>
+                            </a>
+
+                        </ul>
+                    </div>
+
+                    <p class="description description-second"> ou entre com sua conta: </p>
+
+                    <form id="loginForm" class="form" method="post" action="">
+                        <label class="label-input">
+                            <i class="far fa-envelope icon-modify"></i>
+                            <input class="input" type="email" placeholder="E-mail" name="email" required autocomplete="username">
+                        </label>
+
+                        <label class="label-input">
+                            <i class="fas fa-lock icon-modify"></i>
+                            <input class="input" type="password" placeholder="Senha" name="password" id="LoginPassword" required autocomplete="current-password">
+                            <div class="show"></div>
+                        </label>
+
+                        <a href="#" class="password" id="forgotPassword"> Esqueceu sua senha? </a>
+
+                        <input type="hidden" name="login_submit" value="1">
+                        <input class="btn btn-second" type="submit" value="Entrar">
+
+                    </form>
+
+                </div>
+
+                <!-- ===================== RECUPERAR SENHA ===================== -->
+                <form id="recoverForm" class="form" style="display:none;">
+
+                    <h2 class="title title-second"> Recurpe sua Senha </h2>
+
+                    <div class="social-media">
+
+                        <ul class="list-social-media">
+
+                            <a class="link-social-media" href="#">
+                                <li class="item-social-media"><i class="fab fa-facebook-f"></i></li>
+                            </a>
+
+                            <a class="link-social-media" href="#">
+                                <li class="item-social-media"><i class="fab fa-google"></i></li>
+                            </a>
+
+                        </ul>
+                    </div>
+
+                    <p class="description description-second"> Informe seu e-mail abaixo: </p>
+
+                    <label class="label-input">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input class="input" type="email" name="email" placeholder="E-mail" required>
+                    </label>
+
+                    <div id="recoverMessage" style="margin-top:10px;"></div>
+
+                    <?php
+                    // Exibe link de redefinição de teste se existir token na sessão
+                    if (!empty($_SESSION['reset_token']) && !empty($_SESSION['reset_email'])):
+                        $resetLink = "index.php?action=reset&email=" . urlencode($_SESSION['reset_email']) . "&token=" . urlencode($_SESSION['reset_token']);
+                    ?>
+
+                        <div class="meta">
+                            <ul>
+                                <li>
+                                    <a href="<?= htmlspecialchars($resetLink) ?>" class="btn-add reset-link">
+                                        🔑 Link para redefinição
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    <?php endif; ?>
+
+                    <div class="recover-password">
+                        <button class="btn btn-link btn-second" type="submit"> Enviar link de recuperação </button>
+                        <button class="btn btn-login btn-second" type="button" id="backToLogin"> Voltar ao login </button>
+                    </div>
+
+                </form>
+
+                <!-- ===================== REDEFINIR SENHA ===================== -->
+                <form id="resetForm" class="form" style="display:none;" method="POST" action="process_reset.php">
+
+                    <h2 class="title title-second"> Redefinir senha </h2>
+
+                    <div class="social-media">
+
+                        <ul class="list-social-media">
+
+                            <a class="link-social-media" href="#">
+                                <li class="item-social-media"><i class="fab fa-facebook-f"></i></li>
+                            </a>
+
+                            <a class="link-social-media" href="#">
+                                <li class="item-social-media"><i class="fab fa-google"></i></li>
+                            </a>
+
+                        </ul>
+                    </div>
+
+                    <p class="description description-second"> Coloque sua nova senha: </p>
+
+                    <input type="hidden" name="email">
+                    <input type="hidden" name="token">
+
+                    <label class="label-input">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input class="input" type="password" placeholder="Nova senha" name="nova_senha" required autocomplete="new-password">
+                        <div class="show"></div>
+                    </label>
+
+                    <input class="btn btn-second" type="submit" value="Redefinir senha">
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== SCRIPTS ===================== -->
+    <script src="../js/eventsenha.js"></script>
+    <script src="../js/eventsde.js"></script>
+
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loginForm = document.querySelector("#loginForm");
+            const recoverForm = document.querySelector("#recoverForm");
+            const resetForm = document.querySelector("#resetForm");
+            const formlogin = document.querySelector('#FormLogin');
 
-        const searchInput = document.getElementById('search-input');
-        const welcomeSection = document.getElementById('welcome-section');
-        const searchResultsSection = document.getElementById('search-results');
-        const booksContainer = document.getElementById('books-container');
+            // Mostrar formulário de recuperação
+            document.querySelector("#forgotPassword").addEventListener("click", (e) => {
+                e.preventDefault();
+                loginForm.style.display = "none";
+                formlogin.style.display = "none";
+                recoverForm.style.display = "block";
+            });
 
-        searchInput.addEventListener('input', function() {
-            const query = this.value.trim();
+            // Voltar ao login
+            document.querySelector("#backToLogin").addEventListener("click", () => {
+                recoverForm.style.display = "none";
+                formlogin.style.display = "block";
+                loginForm.style.display = "block";
+            });
 
-            // Se input vazio, mostra boas-vindas e esconde resultados
-            if (query.length === 0) {
-                welcomeSection.style.display = 'block';
-                searchResultsSection.style.display = 'none';
-                booksContainer.innerHTML = '';
-                return;
-            }
-
-            welcomeSection.style.display = 'none';
-            searchResultsSection.style.display = 'block';
-
-            // Busca via AJAX (fetch) para retornar resultados
-            fetch('../src/search.php?q=' + encodeURIComponent(query))
-                .then(response => response.json())
-                .then(data => {
-                    booksContainer.innerHTML = '';
-                    if (data.length === 0) {
-                        booksContainer.innerHTML = '<p>Nenhum livro encontrado.</p>';
-                        return;
-                    }
-
-                    data.forEach(book => {
-                        const card = document.createElement('div');
-                        card.classList.add('book-card');
-                        card.innerHTML = `
-                            <img src="${book.cover_image}" alt="${book.title}">
-                            <div class="book-info">
-                                <h3>${book.title}</h3>
-                                <p class="author">${book.author}</p>
-                                <div class="bottom-info">
-                                    <p class="price">R$ ${parseFloat(book.avg_price).toFixed(2).replace('.', ',')}</p>
-                                    <a href="product.php?id=${book.id}" class="btn-buy">Ver mais</a>
-                                </div>
-                            </div>
-                        `;
-                        booksContainer.appendChild(card);
-                    });
+            // Envio assíncrono do formulário de recuperação
+            recoverForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const formData = new FormData(recoverForm);
+                const res = await fetch("request_reset.php", {
+                    method: "POST",
+                    body: formData
                 });
+                const text = await res.text();
+                document.querySelector("#recoverMessage").innerHTML = text;
+            });
+
+            // Exibe resetForm ao clicar no link de redefinição
+            document.body.addEventListener("click", (e) => {
+                if (e.target.matches(".reset-link")) {
+                    e.preventDefault();
+                    recoverForm.style.display = "none";
+                    resetForm.style.display = "block";
+                    const urlParams = new URLSearchParams(e.target.href.split("?")[1]);
+                    resetForm.querySelector("input[name=email]").value = urlParams.get("email");
+                    resetForm.querySelector("input[name=token]").value = urlParams.get("token");
+                }
+            });
         });
-
     </script>
-
-    <!-- Scripts auxiliares -->
-    <script src="../js/carousel.js"></script>
-    <script src="eventsde.js"></script>
-
 </body>
 
 </html>

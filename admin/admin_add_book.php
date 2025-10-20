@@ -6,7 +6,7 @@ require_once __DIR__ . '/../src/config.php';
 // Checa se o usuário é admin
 // Manipulação de superglobais ($_POST/$_GET/$_SESSION): entrada ou estado do usuário.
 if (!isset($_SESSION['loggedin']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../public/login.php");
+    header("Location: ../public/index.php");
     exit;
 }
 

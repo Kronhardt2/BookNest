@@ -18,7 +18,7 @@
     <!-- ===================== HEADER ===================== -->
     <header class="site-header">
         <!-- Logo com link para página inicial -->
-        <div class="logo"><a href="index.php"> BookNest </a></div>
+        <div class="logo"><a href="site.php"> BookNest </a></div>
 
         <!-- Menu de navegação principal -->
         <nav class="nav-menu">

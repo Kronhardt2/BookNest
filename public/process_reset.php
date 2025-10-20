@@ -16,13 +16,13 @@ $nova_senha = $_POST['nova_senha'] ?? '';
 
 // Verifica campos obrigatórios
 if (!$email || !$token || !$nova_senha) {
-    header("Location: login.php?reset=error&msg=Campos obrigatórios faltando");
+    header("Location: index.php?reset=error&msg=Campos obrigatórios faltando");
     exit;
 }
 
 // Valida comprimento mínimo da senha
 if (strlen($nova_senha) < 6) {
-    header("Location: login.php?reset=error&msg=Senha deve ter pelo menos 6 caracteres");
+    header("Location: index.php?reset=error&msg=Senha deve ter pelo menos 6 caracteres");
     exit;
 }
 
@@ -35,7 +35,7 @@ $user = $stmt->fetch();
 
 // Verifica se usuário existe
 if (!$user) {
-    header("Location: login.php?reset=error&msg=Usuário não encontrado");
+    header("Location: index.php?reset=error&msg=Usuário não encontrado");
     exit;
 }
 
@@ -43,7 +43,7 @@ if (!$user) {
 
 // Checa se o token é válido e se não expirou
 if (!password_verify($token, $user['reset_token_hash']) || strtotime($user['reset_expires']) < time()) {
-    header("Location: login.php?reset=error&msg=Token inválido ou expirado");
+    header("Location: index.php?reset=error&msg=Token inválido ou expirado");
     exit;
 }
 
@@ -59,7 +59,7 @@ $stmt->execute([$senha_hash, $user['id']]);
 // ======================= REDIRECIONAMENTO =======================
 
 // Redireciona para a página de login com mensagem de sucesso
-header("Location: login.php?reset=success");
+header("Location: index.php?reset=success");
 exit;
 
 ?>

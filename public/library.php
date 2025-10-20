@@ -101,13 +101,13 @@ $books = $stmt->fetchAll();
 <body>
 
     <header class="site-header">
-        <div class="logo"><a href="index.php"> BookNest </a></div>
+        <div class="logo"><a href="site.php"> BookNest </a></div>
         <nav class="nav-menu">
             <?php if ($user_id): ?>
                 <a href="perfil.php"> Minha Conta </a>
                 <a href="logout.php"> Logout </a>
             <?php else: ?>
-                <a href="login.php"> Login </a>
+                <a href="index.php"> Login </a>
             <?php endif; ?>
         </nav>
     </header>

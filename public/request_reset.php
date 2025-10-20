@@ -44,8 +44,8 @@ if ($user) {
 
     // ===================== MONTAGEM DO LINK =====================
 
-    // Cria link relativo para abrir no login.php e permitir redefinição
-    $resetLink = "login.php?action=reset&email=" . urlencode($email) . "&token=" . urlencode($token);
+    // Cria link relativo para abrir no index.php e permitir redefinição
+    $resetLink = "index.php?action=reset&email=" . urlencode($email) . "&token=" . urlencode($token);
 
     // Retorna HTML com botão de redefinição (classe btn-add e reset-link para JS)
     echo '<div class="meta"><ul><li>';
